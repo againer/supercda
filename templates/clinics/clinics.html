@@ -1,0 +1,63 @@
+{%  extends "base.html" %}
+
+{% block page_content %}
+    {% if messages %}
+        <div class="row">
+            {% for message in messages %}
+                <p class="col-md-5 text-info">{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <div class="row">
+        <div class="col-md-5"><h1>Clinics</h1></div>
+    </div>
+    <div class="row">
+        <div class="col-md-5">
+            <a href="/clinics/create/" class="btn btn-info">
+                <span class="glyphicon glyphicon-plus"></span> New Clinic
+            </a>
+        </div>
+    </div>
+    <br/>
+    {% if clinic_list %}
+        <div class="row">
+            <div class="col-md-7">
+                <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Clinic Name</th>
+                    <th>Date Created</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for clinic in clinic_list %}
+                        <tr>
+                            <td>{{ clinic.name }}</td>
+                            <td>{{ clinic.date_created }}</td>
+                            <td>
+                                <a href="/clinics/clinic/edit/{{clinic.slug}}/" 
+                                   class="btn btn-success">Edit</a>
+                            </td>
+                            <td>
+                                <a href="/clinics/clinic/delete/{{clinic.slug}}/" 
+                                   class="btn btn-danger">Delete</a>
+                            </td>
+                         </tr>
+                    
+                    {% endfor %}
+                </tbody>
+              </table>
+            
+            </div>
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="col-md-10">
+                <p class="lead text-info">
+                    There are no clinics created yet, please create one.
+                </p>
+            </div>
+        </div>
+    
+    {% endif %}
+{% endblock page_content %}

@@ -1,0 +1,18 @@
+{%  extends "base.html" %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-md-4">
+            <strong>Clinic Name:</strong> {{ clinic.name }}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <strong>Slug Name:</strong> {{ clinic.slug }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <strong>Date Created:</strong> {{ clinic.date_created }}
+        </div>
+    </div>
+{% endblock page_content %}

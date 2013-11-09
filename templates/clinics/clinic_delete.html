@@ -1,0 +1,17 @@
+{%  extends "base.html" %}
+
+{% block page_content %}
+    <div class="row">
+        <h1 class="col-md-5">Delete Confirmation</h1>
+    </div>
+    <div class="row">
+        <div class="col-md-7">
+            <form action="" method="post">{% csrf_token %}
+                <p class="lead">Are you sure you want to delete "{{ object }}"?</p>
+                <input class="btn btn-primary" type="submit" value="Confirm" />
+            </form>
+        </div>
+    </div>
+    
+    
+{% endblock page_content %}

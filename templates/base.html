@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>{{ page_title }}</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/static/css/super.css">
+    {% block extra_styles %}{% endblock %}
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+        <p class="chromeframe">You are using an <strong>outdated</strong> browser.
+        Please <a href="http://browsehappy.com/">upgrade your browser</a> or
+        <a href="http://www.google.com/chromeframe/?redirect=true">activate
+        Google Chrome Frame</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!-- Wrap all page content here -->
+    <div id="wrap">
+
+      <!-- Fixed navbar -->
+      <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">&#x276c;super|cda&#x276d;
+            </a>
+          </div>
+          <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+              <li {% if clinics %} class="active" {% endif %}>
+                  <a href="/clinics/">
+                      <span class="glyphicon glyphicon-tasks"></span>
+                      &nbsp; Clinics
+                  </a>
+              </li>
+              <li {% if widgets %} class="active" {% endif %}>
+                  <a href="/widgets/">
+                      <span class="glyphicon glyphicon-cutlery"></span>
+                      &nbsp; CDA Widgets
+                  </a>
+              </li>
+              <li {% if patients %} class="active" {% endif %}>
+                  <a href="/patients/">
+                      <span class="glyphicon glyphicon-search"></span>
+                      &nbsp; Patients
+                  </a>
+              </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+
+      <!-- Begin page content -->
+      <div class="container">
+        {% block page_content %}
+            <div class="page-header">
+              <h1>Welcome to supercda</h1>
+            </div>
+            <p class="lead">CDA Document and Medical Clinic Builder</p>
+        {% endblock %}
+      </div>
+    </div>
+    <div id="footer">
+      <div class="container">
+        <p class="text-muted credit">I am a footer Rawr</p>
+      </div>
+    </div>
+
+    <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
+    <script>window.jQuery || document.write('<script src="/static/js/jquery-1.10.2.min.js"><\/script>')</script>
+    {% block extra_scripts %}{% endblock %}
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID.
+    <script>
+        var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+        g.src='//www.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>
+    -->
+  </body>
+</html>
