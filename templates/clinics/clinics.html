@@ -35,19 +35,23 @@
                             <td>{{ clinic.name }}</td>
                             <td>{{ clinic.date_created }}</td>
                             <td>
-                                <a href="/clinics/clinic/edit/{{clinic.slug}}/" 
-                                   class="btn btn-success">Edit</a>
+                                <a href="/clinics/clinic/edit/{{clinic.slug}}/"
+                                   class="btn btn-success">
+                                   <span class="glyphicon glyphicon-pencil"></span>
+                                   Edit</a>
                             </td>
                             <td>
-                                <a href="/clinics/clinic/delete/{{clinic.slug}}/" 
-                                   class="btn btn-danger">Delete</a>
+                                <a href="/clinics/clinic/delete/{{clinic.slug}}/"
+                                   class="btn btn-danger">
+                                   <span class="glyphicon glyphicon-remove-circle"></span>
+                                   Delete</a>
                             </td>
                          </tr>
-                    
+
                     {% endfor %}
                 </tbody>
               </table>
-            
+
             </div>
         </div>
     {% else %}
@@ -58,6 +62,6 @@
                 </p>
             </div>
         </div>
-    
+
     {% endif %}
 {% endblock page_content %}

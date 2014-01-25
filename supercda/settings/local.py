@@ -24,7 +24,7 @@ DATABASES = {
         'NAME': 'supercda',
         'USER': 'supercda',
         'PASSWORD': 'defaultpassword',
-        'HOST': 'localhost',                      
+        'HOST': 'localhost',
         'PORT': '',
     }
 }

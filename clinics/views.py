@@ -12,33 +12,35 @@
  limitations under the License.
 """
 
-__author__      = "Alex Gainer (superrawr@gmail.com)"
-__copyright__   = "Copyright 2013, Health Records For Everyone (HR4E)"
+__author__ = "Alex Gainer (superrawr@gmail.com)"
+__copyright__ = "Copyright 2014, Health Records For Everyone (HR4E)"
 
 
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
 
-from django.views.generic import DetailView
 from django.views.generic import CreateView
+from django.views.generic import DetailView
 from django.views.generic import UpdateView
 from django.views.generic.edit import DeleteView
 from django.views.generic.list import ListView
 
-from models import ClinicPickle
-from models import Clinic
+from .models import Clinic
+from .models import ClinicPickle
 from .forms import ClinicCreateForm
 
 
 class ClinicActionMixin(object):
     """Action mixin class for Clinic manipulation."""
-    
+
     @property
     def action(self):
+        """Generates an action performed on a clinic."""
         message = '{0} is missing action.'.format(self.__class__)
         raise NotImplementedError(message)
-    
+
     def form_valid(self, form):
+        """If the form is valid, show an action message."""
         message = 'Clinic {0}!'.format(self.action)
         messages.info(self.request, message)
         return super(ClinicActionMixin, self).form_valid(form)
@@ -57,15 +59,17 @@ class ClinicCreateView(ClinicActionMixin, CreateView):
     action = 'created'
     form_class = ClinicCreateForm
     success_url = reverse_lazy('clinic_list')
+
     def form_invalid(self, form):
+        """Checks if the form is invalid."""
         return super(ClinicCreateView, self).form_invalid(form)
 
 
 class ClinicListView(ListView):
-    """View for viewing multiple clinics. Derp."""
+    """View for viewing multiple clinics."""
     model = Clinic
-    
-    
-class ClinicUpdateView(ClinicActionMixin, UpdateView):
-    model = Clinic    
 
+
+class ClinicUpdateView(ClinicActionMixin, UpdateView):
+    """View for updating a clinic model."""
+    model = Clinic
