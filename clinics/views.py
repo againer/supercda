@@ -26,7 +26,6 @@ from django.views.generic.edit import DeleteView
 from django.views.generic.list import ListView
 
 from .models import Clinic
-from .models import ClinicPickle
 from .forms import ClinicCreateForm
 
 

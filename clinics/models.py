@@ -65,78 +65,49 @@ class DocumentComponentBaseClass(models.Model):
         raise NotImplementedError('DocumentComponent.to_xml')
 
 
-class PickleNotFoundException(Exception):
-    """Missing Pickle Exception"""
+class PlanOfCareComponent(DocumentComponentBaseClass):
+    """Document component for indicating clinic care plans per patient.
 
+    <component>
+        <section>
+            <templateId root="2.16.840.1.113883.10.20.22.2.10" />
+            <code code="18776-5" codeSystem="2.16.840.1.113883.6.1"
+                  codeSystemName="LOINC" displayName="Treatment plan" />
+            <title>Plan of Care</title>
+            <text>
+                <paragraph>{text}</paragraph>
+            </text>
+        </section>
+    </component>"""
+    _CODE = {
+        'code': '18776-6',
+        'codeSystem': '2.16.840.1.113883.6.1',
+        'codeSystemName': 'LOINC',
+        'displayName': 'Treatment plan'
+    }
+    _TEMPLATE_ID = {'root': '2.16.840.1.113883.10.20.22.2.10'}
+    _TITLE = 'Plan of Care'
 
-class ClinicPickle(object):
-    """Word dictionary utilities for pickling GRE words."""
-    _PICKLE_FOLDER = os.path.join('data', 'clinics')
-    _MISSING_PICKLE = 'Pickle {0} File Missing.'
+    text = models.TextField()
 
-    def __init__(self, name):
-        self.name = name
-        self.date_created = datetime.datetime.now()
-
-    @classmethod
-    def create(cls, name):
-        """Creates a clinic object and pickles it."""
-        try:
-            pickle_file_name = '{0}.pkl'.format(name)
-            path_to_pickle = os.path.join(cls._PICKLE_FOLDER,
-                                          pickle_file_name)
-            path = os.path.isfile(path_to_pickle)
-            if not path:
-                pickle.dump(cls(name).__dict__, file(path_to_pickle, 'wb'))
-        except IOError:
-            raise PickleNotFoundException, self._MISSING_PICKLE.format(name)
-
-    def delete(self):
-        """Deletes a Clinic Pickle File."""
-        try:
-            pickle_file_name = '{0}.pkl'.format(self.name)
-            path_to_pickle = os.path.join(self._PICKLE_FOLDER,
-                                          pickle_file_name)
-            os.remove(path_to_pickle)
-        except IOError:
-            missing_pickle_error = self._MISSING_PICKLE.format(self.name)
-            raise PickleNotFoundException, missing_pickle_error
-
-    @classmethod
-    def get_all(cls):
-        return filter(lambda x: x != None,
-                      [cls.load(name) for name in cls.GetAllClinicNames()])
-
-    @classmethod
-    def get_all_clinic_names(cls):
-        pkl_files = [f for f in os.listdir(cls._PICKLE_FOLDER)
-                     if os.path.isfile(os.path.join(cls._PICKLE_FOLDER,f))]
-        return [_.strip('.pkl') for _ in pkl_files]
-
-    @classmethod
-    def load(cls, name):
-        """Loads up a pickled clinic as a clinic object."""
-        try:
-            pickle_file_name = '{0}.pkl'.format(name)
-            path_to_pickle = os.path.join(cls._PICKLE_FOLDER,
-                                          pickle_file_name)
-            if os.path.isfile(path_to_pickle):
-                clinic = cls(name)
-                clinic.__dict__ = pickle.load(file(path_to_pickle, 'r+b'))
-            else:
-                clinic = None
-            return clinic
-        except IOError:
-            return None
-
-    def update(self, post_data):
-        """Updates a clinic given the post_data dictionary."""
-        self.__dict__.update({})
-        try:
-            pickle_file_name = '{0}.pkl'.format(self.name)
-            path_to_pickle = os.path.join(self._PICKLE_FOLDER,
-                                          pickle_file_name)
-            if os.path.isfile(path_to_pickle):
-                pickle.dump(self.__dict__, file(path_to_pickle), 'wb')
-        except IOError:
-            raise PickleNotFoundException, self._MISSING_PICKLE.format(name)
+    def to_xml(self):
+        root = etree.Element('component')
+        section = etree.SubElement(root, 'section')
+        template_id = etree.SubElement(
+            section,
+            'templateId',
+            **self._TEMPLATE_ID)
+        code = etree.SubElement(
+            section,
+            'code',
+            **self._CODE)
+        title = etree.SubElement(
+            section,
+            'title',
+            text=self._TITLE)
+        text = etree.SubElement(section, 'text')
+        paragraph = etree.SubElement(
+            text,
+            'paragraph',
+            text=self.text or 'NA')
+        return etree.tostring(root, pretty_print=True)
