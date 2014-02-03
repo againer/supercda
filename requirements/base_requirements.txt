@@ -1,2 +1,3 @@
--e git+https://github.com/django-nonrel/djangotoolbox@toolbox-1.3
+-e git+https://github.com/maraujop/django-crispy-forms
+south
 lxml
